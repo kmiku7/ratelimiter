@@ -52,3 +52,17 @@ func (rl *RateLimiter) Allow() bool {
 	rl.lastTime = time.Now()
 	return true
 }
+
+func (rl *RateLimiter) Reset(maxCount int, interval time.Duration) *RateLimiter {
+	if rl == nil {
+		return NewRateLimiter(maxCount, interval)
+	}
+	rl.mu.Lock()
+	defer rl.mu.Unlock()
+	rl.interval = interval
+	rl.maxCount = maxCount
+	if rl.curCount > rl.maxCount {
+		rl.curCount = maxCount
+	}
+	return rl
+}

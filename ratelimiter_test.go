@@ -58,3 +58,19 @@ func TestLimiter2(t *testing.T) {
 		t.Error("Allow: true, want false")
 	}
 }
+
+func TestLimiter3(t *testing.T) {
+	rl := NewRateLimiter(2, 10*time.Millisecond)
+	var result bool
+	for i := 0; i < 2; i++ {
+		result = rl.Allow()
+		if !result {
+			t.Errorf("Allow(%d): false, want true", i)
+		}
+	}
+	rl.Reset(100, 10*time.Millisecond)
+	result = rl.Allow()
+	if result {
+		t.Error("Allow: true, want false")
+	}
+}
