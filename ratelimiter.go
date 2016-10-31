@@ -54,9 +54,6 @@ func (rl *RateLimiter) Allow() bool {
 }
 
 func (rl *RateLimiter) Reset(maxCount int, interval time.Duration) *RateLimiter {
-	if rl == nil {
-		return NewRateLimiter(maxCount, interval)
-	}
 	rl.mu.Lock()
 	defer rl.mu.Unlock()
 	rl.interval = interval
