@@ -61,5 +61,5 @@ func (rl *RateLimiter) Reset(maxCount int, interval time.Duration) {
 	if rl.curCount > rl.maxCount {
 		rl.curCount = maxCount
 	}
-	return rl
+	return
 }
